@@ -15,8 +15,7 @@ namespace Infrastructure.CrossCutting
         {
             _secretKey = secretKey;
         }
-
-        public string GenerateJwtToken(UserEntity usuario)
+        public string GenerateJwtToken(UsersEntity usuario)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_secretKey);
@@ -24,10 +23,9 @@ namespace Infrastructure.CrossCutting
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.Name, usuario.Username),
-                    new Claim("UserId", usuario.UserId.ToString()),
-                    new Claim("FilialId", usuario.FilialId.ToString()), // Inclui o FilialId no token
-                    new Claim("Role",usuario.Role)
+                    new Claim(ClaimTypes.Name, usuario.UserCompl.username),
+                    new Claim("userId", usuario.id.ToString()),
+                    new Claim("role",usuario.UserCompl.role)
                 }),
                 Expires = DateTime.UtcNow.AddHours(2),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

@@ -25,8 +25,8 @@ namespace Service
             try
             {
 
-                UserEntity usuarios = await _userRepository.UserByUsername(username);
-                if (usuarios == null || !BCrypt.Net.BCrypt.Verify(password, usuarios.Password))
+                UsersEntity usuarios = await _userRepository.UserByUsername(username);
+                if (usuarios == null || !BCrypt.Net.BCrypt.Verify(password, usuarios.UserCompl.password_hash))
                 {
                     throw new UnauthorizedAccessException("Credenciais inválidas.");
                 }
@@ -39,24 +39,23 @@ namespace Service
                 {
                     Token = token,
                     RefreshToken = refreshToken,
-                    UsuarioId = usuarios.UserId,
-                    Username = usuarios.Username,
-                    FilialId = usuarios.FilialId,
+                    UsuarioId = usuarios.id,
+                    Username = usuarios.UserCompl.username,
                     dtExpiration = TimeSpan.FromHours(1),
-                    Role = usuarios.Role // Exemplo de permissões
+                    Role = usuarios.UserCompl.role // Exemplo de permissões
                 };
 
                 await _redis.SetValueAsync(userKey, JsonConvert.SerializeObject(userData), TimeSpan.FromHours(1)); // Expira em 1 hora
 
-                var refreshTokenKey = $"refreshToken:{usuarios.UserId}";
+                var refreshTokenKey = $"refreshToken:{usuarios.id}";
                 await _redis.SetValueAsync(refreshTokenKey, System.Text.Json.JsonSerializer.Serialize(userData), TimeSpan.FromDays(7));
 
                 var authResponse = new
                 {
                     Token = token,
                     RefreshToken = refreshToken,
-                    Username = usuarios.Username,
-                    Role = usuarios.Role
+                    Username = usuarios.UserCompl,username,
+                    Role = usuarios.UserCompl.role
 
                 };
 

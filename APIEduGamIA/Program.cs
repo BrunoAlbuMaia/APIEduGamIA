@@ -26,6 +26,7 @@ builder.Services.AddSingleton<IRedisService>(new RedisService(redisConnectionStr
 
 //// Configurar os serviços
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IUsersService, UsersService>();
 
 ////Configurar os repositoris
 builder.Services.AddSingleton<IUserRepository, UserRepository>();

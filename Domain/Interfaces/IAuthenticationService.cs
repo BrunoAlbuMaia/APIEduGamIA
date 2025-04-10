@@ -10,7 +10,7 @@ namespace Domain.Interfaces
     {
         Task<dynamic> LoginAsync(string username, string password);
 
-        Task<(bool IsAuthenticated, string Role, string FilialId, string UserId, string Username)> ValidateAndAuthorizeAsync(string token);
+        Task<(bool IsAuthenticated, string Role, string UserId, string Username)> ValidateAndAuthorizeAsync(string token);
     
     }
 }

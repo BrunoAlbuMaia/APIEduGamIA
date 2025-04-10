@@ -1,16 +1,40 @@
+using Domain.Entitys;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using RoomManagementAPI.API;
+using Service;
+using Shared.Requests;
 
 namespace APIEduGamIA.Controllers
 {
     [ApiController]
-    [Route("/api/[controller]")]
+    [Route("/api/users")]
     public class UsersController : ControllerBase
     {
-        
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        private readonly IUsersService _usersService;
+
+        public UsersController(IUsersService usersService)
         {
-            return Ok("Hello World");
+            _usersService = usersService;
+        }
+
+
+        #region
+        [HttpPost]
+        #endregion
+        public async Task<IActionResult> PostUsers(UsersRequests users)
+        {
+       
+            return Ok(await _usersService.CreateUserAsync(users));
+        }
+
+        #region
+        [HttpPut]
+        [CustomAuthorize("STUDENT","TEACHER")]
+        #endregion
+        public async Task<IActionResult> PutUsers()
+        {
+            return Ok("");
         }
     }
 }

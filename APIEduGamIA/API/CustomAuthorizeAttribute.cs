@@ -22,7 +22,7 @@ namespace RoomManagementAPI.API
             var authorizationService = context.HttpContext.RequestServices.GetService<IAuthenticationService>();
             var token = context.HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
 
-            var (isAuthenticated, role, filialId, userId, username) = await authorizationService.ValidateAndAuthorizeAsync(token);
+            var (isAuthenticated, role, userId, username) = await authorizationService.ValidateAndAuthorizeAsync(token);
 
             if (!isAuthenticated)
             {
@@ -43,7 +43,7 @@ namespace RoomManagementAPI.API
                 return;
             }
 
-            context.HttpContext.Items["FilialId"] = filialId;
+            
             context.HttpContext.Items["UserId"] = userId;
             context.HttpContext.Items["Username"] = username;
 

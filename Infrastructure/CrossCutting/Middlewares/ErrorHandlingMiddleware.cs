@@ -41,7 +41,14 @@ public class ErrorHandlingMiddleware
 
     private Task HandleExceptionAsync(HttpContext context, Exception ex)
     {
-        var statusCode = HttpStatusCode.InternalServerError;
+        var statusCode = ex switch
+        {
+            ArgumentException => HttpStatusCode.BadRequest,
+            InvalidOperationException => HttpStatusCode.BadRequest,
+            UnauthorizedAccessException => HttpStatusCode.Unauthorized,
+            KeyNotFoundException => HttpStatusCode.NotFound,
+            _ => HttpStatusCode.InternalServerError
+        };
         var response = new ErrorResponse
         {
             StatusCode = (int)statusCode,
