@@ -21,7 +21,8 @@ namespace APIEduGamIA.Controllers
         #endregion
         public async Task<IActionResult> postLoginAsync([FromBody] LoginRequests login)
         {
-            return await _authService.LoginAsync(login.username, login.password);
+            var result = await _authService.LoginAsync(login.username, login.password);
+            return Ok(result);
         }
     }
 }

@@ -54,7 +54,7 @@ namespace Service
                 {
                     Token = token,
                     RefreshToken = refreshToken,
-                    Username = usuarios.UserCompl,username,
+                    Username = usuarios.UserCompl.username,
                     Role = usuarios.UserCompl.role
 
                 };
@@ -70,13 +70,13 @@ namespace Service
             }
         }
 
-        public async Task<(bool IsAuthenticated, string Role, string FilialId, string UserId, string Username)> ValidateAndAuthorizeAsync(string token)
+        public async Task<(bool IsAuthenticated, string Role, string UserId, string Username)> ValidateAndAuthorizeAsync(string token)
         {
             var redisData = await _redis.GetValueAsync($"user:{token}");
 
             if (string.IsNullOrEmpty(redisData))
             {
-                return (false, null, null, null, null);
+                return (false, null, null, null);
             }
 
 
@@ -87,7 +87,7 @@ namespace Service
             var username = userData.Username.ToString();
 
 
-            return (true, Role, filialID, userId, username);
+            return (true, Role, userId, username);
         }
     }
 }
