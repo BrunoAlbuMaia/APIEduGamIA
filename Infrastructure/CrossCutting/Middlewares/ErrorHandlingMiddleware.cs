@@ -1,19 +1,7 @@
-﻿using K4os.Compression.LZ4.Internal;
-using Microsoft.Extensions.Logging;
-using Microsoft.Win32;
-using StackExchange.Redis;
-using static System.Net.WebRequestMethods;
-using System.Net.Http;
-using System.Net.Sockets;
+﻿using Microsoft.Extensions.Logging;
 using System.Net;
-using System.Runtime.InteropServices;
-using System.Runtime.Intrinsics.X86;
-using System.Text.Json;
-using System;
-
-using System.Net;
-using System.Text.Json;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 public class ErrorHandlingMiddleware
 {
@@ -56,7 +44,7 @@ public class ErrorHandlingMiddleware
             Details = ex.InnerException?.Message
         };
 
-        var payload = JsonSerializer.Serialize(response);
+        var payload = JsonConvert.SerializeObject(response);
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = (int)statusCode;
         return context.Response.WriteAsync(payload);

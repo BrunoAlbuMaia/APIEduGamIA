@@ -1,8 +1,10 @@
 using Domain.Interfaces;
 using Infrastructure.CrossCutting.Redis;
 using Infrastructure.Data.Context;
+using Infrastructure.Data.Interfaces;
 using Infrastructure.Data.Repositories;
 using Infrastructure.Data.Repositories.Interfaces;
+using Infrastructure.Data.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -27,11 +29,16 @@ builder.Services.AddSingleton<IRedisService>(new RedisService(redisConnectionStr
 //// Configurar os serviços
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
 
 ////Configurar os repositoris
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
+builder.Services.AddSingleton<ICoursesRepository,CoursesRepository>();
 
 
+
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 
 
@@ -96,7 +103,10 @@ builder.Services.AddControllers();
 var app = builder.Build();
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
-app.UseWebSockets();
+//app.UseWebSockets();
+
+app.UseStaticFiles();
+
 
 //if (app.Environment.IsDevelopment())
 //{

@@ -48,7 +48,7 @@ namespace Service
                 await _redis.SetValueAsync(userKey, JsonConvert.SerializeObject(userData), TimeSpan.FromHours(1)); // Expira em 1 hora
 
                 var refreshTokenKey = $"refreshToken:{usuarios.id}";
-                await _redis.SetValueAsync(refreshTokenKey, System.Text.Json.JsonSerializer.Serialize(userData), TimeSpan.FromDays(7));
+                await _redis.SetValueAsync(refreshTokenKey,JsonConvert.SerializeObject(userData), TimeSpan.FromDays(7));
 
                 var authResponse = new
                 {
@@ -82,7 +82,7 @@ namespace Service
 
             var userData = JsonConvert.DeserializeObject<dynamic>(redisData);
             var Role = userData.Role.ToString();
-            var filialID = userData.FilialId.ToString();
+            //var filialID = userData.FilialId.ToString();
             var userId = userData.UsuarioId.ToString();
             var username = userData.Username.ToString();
 
