@@ -32,6 +32,8 @@ namespace APIEduGamIA.Controllers
         [SwaggerOperation(Summary = "Faz upload da imagem do curso")]
         public async Task<IActionResult> UploadCourseImage(int id, [FromForm] CoursePostImageRequests file)
         {
+            //var username = HttpContext.Items["Username"].ToString();
+
             if (file == null || file.File.Length == 0)
                 return BadRequest("Imagem inválida.");
 

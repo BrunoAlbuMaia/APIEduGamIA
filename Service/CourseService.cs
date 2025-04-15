@@ -46,7 +46,7 @@ namespace Service
             var courseEntity = new CoursesEntity
             {
                 id = id,
-                image = $"/uploads/courses/{fileName}"
+                image = $"{directory}\\{fileName}"
             };
             var result = await _courseRepository.UpdateCourseAsync(courseEntity);
 

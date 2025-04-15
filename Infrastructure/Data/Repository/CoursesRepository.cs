@@ -108,7 +108,7 @@ namespace Infrastructure.Data.Repository
 
                 if (course.image != null)
                 {
-                    fieldsToUpdate.Add("image = @image");
+                    fieldsToUpdate.Add("imagem = @image");
                     parameters.Add("@image", course.image);
                 }
 
@@ -124,15 +124,16 @@ namespace Infrastructure.Data.Repository
                     parameters.Add("@userUpdate", course.user_update);
                 }
 
-                fieldsToUpdate.Add("updated_at = NOW()");
+                
 
                 if (!fieldsToUpdate.Any())
                     return false;
                 using (var transaction = connection.BeginTransaction())
                 {
                     try { 
-                        var sql = $"UPDATE courses SET {string.Join(", ", fieldsToUpdate)} WHERE id = @id";
+                        var sql = $"UPDATE cursos SET {string.Join(", ", fieldsToUpdate)} WHERE id = @id";
                         var result = await connection.ExecuteAsync(sql, parameters, transaction);
+                        transaction.Commit();
                         return result > 0;
 
                     } catch (Exception)
