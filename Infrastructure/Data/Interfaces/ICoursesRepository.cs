@@ -12,7 +12,7 @@ namespace Infrastructure.Data.Interfaces
 {
     public interface ICoursesRepository
     {
-        Task<PaginatedResponse<CoursesEntity>> GetAllAsync();
+        Task<PaginatedResponse<CoursesEntity>> GetAllAsync(int page,int size, string? name);
 
 
         Task<bool> UpdateCourseAsync(CoursesEntity course);

@@ -1,7 +1,7 @@
-﻿
-using Domain.Entities;
+﻿using Domain.Entities;
 using Domain.Interfaces;
 using Infrastructure.Data.Interfaces;
+using Shared.Dtos.Responses;
 using Shared.Requests;
 using Shared.Response;
 
@@ -19,9 +19,9 @@ namespace Service
         {
             var courseEntity = new CoursesEntity
             {
-                name = course.Name,
-                description = course.Description,
-                isActive = true,
+                name = course.name,
+                description = course.description,
+                is_active = true,
                 user_create = course.Username,
                 user_update = course.Username
             };
@@ -46,10 +46,16 @@ namespace Service
             var courseEntity = new CoursesEntity
             {
                 id = id,
-                image = $"{directory}\\{fileName}"
+                image = $"{fileName}"
             };
             var result = await _courseRepository.UpdateCourseAsync(courseEntity);
 
+            return result;
+        }
+
+        public async Task<PaginatedResponse<CoursesEntity>> GetAllAsync(int page, int size, string? name = null)
+        {
+            var result = await _courseRepository.GetAllAsync(page,size,name);
             return result;
         }
     }

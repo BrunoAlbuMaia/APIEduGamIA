@@ -1,7 +1,10 @@
-﻿using Dapper;
+﻿using System.Drawing;
+using Dapper;
 using Domain.Entities;
+using Domain.Entitys;
 using Infrastructure.Data.Context;
 using Infrastructure.Data.Interfaces;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using MySql.Data.MySqlClient;
 using Shared.Dtos.Responses;
 using Shared.Response;
@@ -34,7 +37,7 @@ namespace Infrastructure.Data.Repository
                         try
                         {
                             //Inserindo na tabela Principal
-                            var queryCourse = @"INSERT INTO dbEduGamIa.cursos (name, description,isActive,user_create,user_update)
+                            var queryCourse = @"INSERT INTO dbEduGamIa.course (name, description,is_active,user_create,user_update)
                                       VALUES (@name,@description,1,@user_create,@user_update);
                                       SELECT LAST_INSERT_ID();";
 
@@ -71,9 +74,56 @@ namespace Infrastructure.Data.Repository
             }
         }
 
-        public Task<PaginatedResponse<CoursesEntity>> GetAllAsync()
+        public async Task<PaginatedResponse<CoursesEntity>> GetAllAsync(int page, int size, string? name = null)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (var connection = _connectionFactory.CreateConnection())
+                {
+                    if (connection == null)
+                    {
+                        throw new InvalidOperationException("Falha ao connectar ao banco de dados");
+                    }
+                    connection.Open();
+
+                    // Calculando o OFFSET
+                    int offset = (page - 1) * size;
+
+                    string countQuery = "SELECT COUNT(*) FROM course";
+
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        countQuery += " WHERE name LIKE @name";
+                    }
+
+                    int total = await connection.ExecuteScalarAsync<int>(countQuery, new { name = $"%{name}%" });
+
+                    var query = @"
+                                SELECT 
+                                    *
+
+                                FROM course";
+                    if (!string.IsNullOrEmpty(name))
+                    {
+                        query += " WHERE course.name LIKE @name";
+                    }
+
+                    query += " ORDER BY course.id LIMIT @size OFFSET @Offset";
+
+                    var result = await connection.QueryAsync<CoursesEntity>(query,
+                            new { Name = $"%{name}%", Size = size, Offset = offset });
+                    
+                    return new PaginatedResponse<CoursesEntity>(10,1,1,result.ToList());
+
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException();
+            }
+            
         }
 
         public async Task<bool> UpdateCourseAsync(CoursesEntity course)
@@ -108,14 +158,14 @@ namespace Infrastructure.Data.Repository
 
                 if (course.image != null)
                 {
-                    fieldsToUpdate.Add("imagem = @image");
+                    fieldsToUpdate.Add("image = @image");
                     parameters.Add("@image", course.image);
                 }
 
-                if (course.isActive != null)
+                if (course.is_active != null)
                 {
                     fieldsToUpdate.Add("is_active = @isActive");
-                    parameters.Add("@isActive", course.isActive);
+                    parameters.Add("@isActive", course.is_active);
                 }
 
                 if (course.user_update != null)
@@ -131,7 +181,7 @@ namespace Infrastructure.Data.Repository
                 using (var transaction = connection.BeginTransaction())
                 {
                     try { 
-                        var sql = $"UPDATE cursos SET {string.Join(", ", fieldsToUpdate)} WHERE id = @id";
+                        var sql = $"UPDATE course SET {string.Join(", ", fieldsToUpdate)} WHERE id = @id";
                         var result = await connection.ExecuteAsync(sql, parameters, transaction);
                         transaction.Commit();
                         return result > 0;

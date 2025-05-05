@@ -9,8 +9,8 @@ namespace Shared.Requests
     }
     public class CoursePostRequests
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string name { get; set; }
+        public string description { get; set; }
         public string? Username { get; private set; }
 
         public void setUsername(string username) { Username = username; }

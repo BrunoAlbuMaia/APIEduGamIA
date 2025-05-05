@@ -6,6 +6,7 @@ using Infrastructure.Data.Repositories;
 using Infrastructure.Data.Repositories.Interfaces;
 using Infrastructure.Data.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Service;
@@ -101,6 +102,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(@"D:\ImgCursos"),
+    RequestPath = "/images/courses"
+});
+
 
 app.UseMiddleware<ErrorHandlingMiddleware>();
 //app.UseWebSockets();
