@@ -31,10 +31,12 @@ builder.Services.AddSingleton<IRedisService>(new RedisService(redisConnectionStr
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
+builder.Services.AddScoped<IDisciplineService, DisciplinaService>();
 
 ////Configurar os repositoris
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<ICoursesRepository,CoursesRepository>();
+builder.Services.AddSingleton<IDisciplineRepository, DisciplineRepository>();
 
 
 

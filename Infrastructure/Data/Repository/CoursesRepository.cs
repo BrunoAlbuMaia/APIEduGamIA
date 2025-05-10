@@ -113,7 +113,7 @@ namespace Infrastructure.Data.Repository
                     var result = await connection.QueryAsync<CoursesEntity>(query,
                             new { Name = $"%{name}%", Size = size, Offset = offset });
                     
-                    return new PaginatedResponse<CoursesEntity>(10,1,1,result.ToList());
+                    return new PaginatedResponse<CoursesEntity>(page,size,total,result.ToList());
 
 
                 }
