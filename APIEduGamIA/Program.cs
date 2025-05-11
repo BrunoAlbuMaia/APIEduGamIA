@@ -32,12 +32,13 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IDisciplineService, DisciplinaService>();
+builder.Services.AddScoped<IModuleService, ModuleService>();
 
 ////Configurar os repositoris
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<ICoursesRepository,CoursesRepository>();
 builder.Services.AddSingleton<IDisciplineRepository, DisciplineRepository>();
-
+builder.Services.AddSingleton<IModuleRepository, ModuleRepository>();
 
 
 builder.Logging.ClearProviders();

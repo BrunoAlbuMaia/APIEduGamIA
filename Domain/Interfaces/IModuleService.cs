@@ -10,9 +10,9 @@ using Shared.Response;
 
 namespace Domain.Interfaces
 {
-    public interface IDisciplineService
+    public interface IModuleService
     {
-        Task<PaginatedResponse<DisciplineEntity>> GetAll(int page,int size, string? name = null);
-        Task<DisciplinePostResponse> Create(DisciplineRequests disciplina);
+        Task<PaginatedResponse<ModuleEntity>> GetAll(int page, int size, string? name = null);
+        Task<ModulePostResponse> Create(ModuleRequests disciplina);
     }
 }
