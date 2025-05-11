@@ -10,8 +10,8 @@ namespace Infrastructure.Data.Repositories
 {
     public class UserRepository:IUserRepository
     {
-        private readonly IDatabaseConnectionFactory _connectionFactory;
-        public UserRepository(IDatabaseConnectionFactory connectionFactory)
+        private readonly IDbCoreConnectionFactory _connectionFactory;
+        public UserRepository(IDbCoreConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
         } 

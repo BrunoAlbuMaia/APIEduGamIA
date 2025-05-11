@@ -14,9 +14,9 @@ namespace Infrastructure.Data.Repository
 {
     public class DisciplineRepository : IDisciplineRepository
     {
-        public readonly IDatabaseConnectionFactory _connectionFactory;
+        public readonly IDbEducacionalConnectionFactory _connectionFactory;
 
-        public DisciplineRepository(IDatabaseConnectionFactory connectionFactory)
+        public DisciplineRepository(IDbEducacionalConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
         }

@@ -15,9 +15,9 @@ namespace Infrastructure.Data.Repository
 {
     public class ModuleRepository : IModuleRepository
     {
-        private readonly IDatabaseConnectionFactory _connectionFactory;
+        private readonly IDbEducacionalConnectionFactory _connectionFactory;
 
-        public ModuleRepository(IDatabaseConnectionFactory connection)
+        public ModuleRepository(IDbEducacionalConnectionFactory connection)
         {
             _connectionFactory = connection;
         }

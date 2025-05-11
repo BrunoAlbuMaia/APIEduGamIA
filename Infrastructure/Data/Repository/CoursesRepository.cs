@@ -14,8 +14,8 @@ namespace Infrastructure.Data.Repository
 {
     public class CoursesRepository : ICoursesRepository
     {
-        private readonly IDatabaseConnectionFactory _connectionFactory;
-        public CoursesRepository(IDatabaseConnectionFactory db)
+        private readonly IDbEducacionalConnectionFactory _connectionFactory;
+        public CoursesRepository(IDbEducacionalConnectionFactory db)
         {
             _connectionFactory = db;
         }
@@ -37,7 +37,7 @@ namespace Infrastructure.Data.Repository
                         try
                         {
                             //Inserindo na tabela Principal
-                            var queryCourse = @"INSERT INTO dbEduGamIa.course (name, description,is_active,user_create,user_update)
+                            var queryCourse = @"INSERT INTO course (name, description,is_active,user_create,user_update)
                                       VALUES (@name,@description,1,@user_create,@user_update);
                                       SELECT LAST_INSERT_ID();";
 

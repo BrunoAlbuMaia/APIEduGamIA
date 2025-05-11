@@ -21,10 +21,17 @@ var connectionStrings = builder.Configuration.GetSection("ConnectionStrings").Ge
 
 
 var defaultconnectionString = connectionStrings["DefaultConnection"];
+var dbEducacionalConnectionString = connectionStrings["dbEducacionalConnection"];
+var dbGamificationConnectionString = connectionStrings["dbEducacionalConnection"];
+var dbCoreConnectionString = connectionStrings["dbCoreConnection"];
 var redisConnectionString = connectionStrings["Redis"];
 
 ////Configurar Banco de dados/ Redis
 builder.Services.AddSingleton<IDatabaseConnectionFactory>(sp => new DatabaseConnectionFactory(defaultconnectionString));
+builder.Services.AddSingleton<IDbEducacionalConnectionFactory>(sp => new DbEducacionalConnectionFactory(dbEducacionalConnectionString));
+builder.Services.AddSingleton<IDbGamificationConnectionFactory>(sp => new DbGamificationConnectionFactory(dbGamificationConnectionString));
+builder.Services.AddSingleton<IDbCoreConnectionFactory>(sp => new DbCoreConnectionFactory(dbCoreConnectionString));
+
 builder.Services.AddSingleton<IRedisService>(new RedisService(redisConnectionString));
 
 //// Configurar os serviços

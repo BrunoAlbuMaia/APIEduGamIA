@@ -29,7 +29,8 @@ namespace APIEduGamIA.Controllers
         [SwaggerOperation(Summary = "Cadastra um NOVO curso na instituição")]
         public async Task<IActionResult> PostCourse(CoursePostRequests courses)
         {
-            courses.setUsername(HttpContext.Items["Username"].ToString());
+            courses.setUsername("bruno.maia");
+            //courses.setUsername(HttpContext.Items["Username"].ToString());
             return Ok(await _courseService.CreateCourseAsyn(courses));
         }
 
