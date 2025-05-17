@@ -10,8 +10,8 @@ namespace Infrastructure.Data.Repositories
 {
     public class UserRepository:IUserRepository
     {
-        private readonly IDbCoreConnectionFactory _connectionFactory;
-        public UserRepository(IDbCoreConnectionFactory connectionFactory)
+        private readonly IDatabaseConnectionFactory _connectionFactory;
+        public UserRepository(IDatabaseConnectionFactory connectionFactory)
         {
             _connectionFactory = connectionFactory;
         } 
@@ -45,8 +45,8 @@ namespace Infrastructure.Data.Repositories
                             var userId = await connection.ExecuteScalarAsync<int>(queryUsers, parametersUsers, transaction);
 
                             //Inserindo na tabela Complemento
-                            var queryUsersCompl = @"INSERT INTO dbEduGamIa.usersCompl(user_id,email,username,role,password_hash,preferences)
-                                                   VALUES (@user_id,@email,@username,@role,@password_hash,@preferences);";
+                            var queryUsersCompl = @"INSERT INTO dbEduGamIa.usersCompl(user_id,email,username,role,password_hash)
+                                                   VALUES (@user_id,@email,@username,@role,@password_hash);";
 
                             var parametersUsersCompl = new { 
                                 user_id = userId,
@@ -54,7 +54,7 @@ namespace Infrastructure.Data.Repositories
                                 username = users.UserCompl.username,
                                 role = users.UserCompl.role,
                                 password_hash = users.UserCompl.password_hash,
-                                preferences = users.UserCompl.preferences
+                                //preferences = users.UserCompl.preferences
                             };
                             await connection.ExecuteAsync(queryUsersCompl, parametersUsersCompl, transaction);
                             transaction.Commit();

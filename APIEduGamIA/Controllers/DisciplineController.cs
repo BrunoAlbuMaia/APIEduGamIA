@@ -24,13 +24,13 @@ namespace APIEduGamIA.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Create(DisciplineRequests discipline)
-        {
-            //discipline.setUsername(HttpContext.Items["Username"].ToString());
-            discipline.setUsername("bruno.maia");
-            var result = await _discipline.Create(discipline);
-            return Ok(result);
-        }
+        //[HttpPost]
+        //public async Task<IActionResult> Create(DisciplineRequests discipline)
+        //{
+        //    //discipline.setUsername(HttpContext.Items["Username"].ToString());
+        //    discipline.setUsername("bruno.maia");
+        //    var result = await _discipline.Create(discipline);
+        //    return Ok(result);
+        //}
     }
 }

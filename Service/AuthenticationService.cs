@@ -55,6 +55,7 @@ namespace Service
                     Token = token,
                     RefreshToken = refreshToken,
                     Username = usuarios.UserCompl.username,
+                    Course = "Análise e Desenvolvimento de Sistemas",
                     Role = usuarios.UserCompl.role
 
                 };

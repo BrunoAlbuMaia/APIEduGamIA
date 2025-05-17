@@ -40,13 +40,16 @@ builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<IDisciplineService, DisciplinaService>();
 builder.Services.AddScoped<IModuleService, ModuleService>();
+builder.Services.AddScoped<ILessonsService, LessonsService>();
+builder.Services.AddScoped<IQuestionsService,QuestionsService>();
 
 ////Configurar os repositoris
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<ICoursesRepository,CoursesRepository>();
 builder.Services.AddSingleton<IDisciplineRepository, DisciplineRepository>();
 builder.Services.AddSingleton<IModuleRepository, ModuleRepository>();
-
+builder.Services.AddSingleton<ILessonsRepository, LessonsRepository>();
+builder.Services.AddSingleton<IQuestionsRepository, QuestionsRepository>();
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
@@ -113,11 +116,11 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(@"D:\ImgCursos"),
-    RequestPath = "/images/courses"
-});
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//    //FileProvider = new PhysicalFileProvider(@"D:\ImgCursos"),
+//    RequestPath = "/images/courses"
+//});
 
 
 app.UseMiddleware<ErrorHandlingMiddleware>();

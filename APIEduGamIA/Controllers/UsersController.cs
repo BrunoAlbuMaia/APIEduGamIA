@@ -36,13 +36,5 @@ namespace APIEduGamIA.Controllers
             return Ok(await _usersService.CreateUserAsync(users));
         }
 
-        #region
-        [HttpPut]
-        [CustomAuthorize("STUDENT","TEACHER")]
-        #endregion
-        public async Task<IActionResult> PutUsers()
-        {
-            return Ok("");
-        }
     }
 }

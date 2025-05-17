@@ -21,13 +21,13 @@ namespace APIEduGamIA.Controllers
             var result = await _moduleService.GetAll(page, size, name);
             return Ok(result);
         }
-        [HttpPost]
-        public async Task<IActionResult> Create(ModuleRequests module)
-        {
-            module.setUsername("bruno.maia");
-            var result = await _moduleService.Create(module);
-            return Ok(result);
+        //[HttpPost]
+        //public async Task<IActionResult> Create(ModuleRequests module)
+        //{
+        //    module.setUsername("bruno.maia");
+        //    var result = await _moduleService.Create(module);
+        //    return Ok(result);
 
-        }
+        //}
     }
 }
